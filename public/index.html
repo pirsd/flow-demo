@@ -36,7 +36,7 @@
 			};
 
 			// Needed url can be found on Lead Capture detail view.
-			var url = 'https://URL_OF_YOUR_CRM/api/v1/LeadCapture/API_KEY'; 
+			var url = 'https://flow-demo-pi-master-yqvngzairh.herokuapp.com/'; 
 
 			var xhr = new XMLHttpRequest();
 			xhr.open('POST', url, true);
@@ -73,15 +73,35 @@
 		<!--  <input type="hidden" name="debugEmail" value="weqrefa@gmail.com">       -->
 		<!--  ----------------------------------------------------------------------  -->
 
-		<label for="company">Company</label><input  id="company" maxlength="40" name="company" size="20" type="text" /><br>
+		<label for="company">Company</label>
+			<div>
+          		 	<input type="text" id="company" maxlength="40" name="company" placeholder="Compani Name" required>
+        		</div>
+			<br>
 
-		<label for="first_name">First Name</label><input  id="first_name" maxlength="40" name="first_name" size="20" type="text" /><br>
+		<label for="first_name">First Name</label>
+			<div>
+			   <input type="text" id="first_name" maxlength="40 name="first_name" placeholder="First Name" required>
+			</div>
+			<br>
 
-		<label for="last_name">Last Name</label><input  id="last_name" maxlength="80" name="last_name" size="20" type="text" /><br>
+		<label for="last_name">Last Name</label>
+			<div>
+            			<input type="text" id="last_name" maxlength="80" name="last_name" placeholder="Last Name" required>
+        		</div>
+			<br>
 
-		<label for="email">Email</label><input  id="email" maxlength="80" name="email" size="20" type="text"/><br>
+		<label for="email">Email</label>
+			<div>
+			  <input type="email" id="email" maxlength="80" name="email" placeholder="Email Address" required>
+			</div>
+			<br>
 
-		<label for="phone">Phone</label><input  id="phone" maxlength="40" name="phone" size="20" type="text"/><br>
+		<label for="phone">Phone</label>
+			<div>
+			  <input type="text" id="phone" maxlength="40" name="phone" placeholder="Phone" required>
+			</div>  
+			<br>
 
 		Product Interest:<select  id="00N5j000003hoDA" name="00N5j000003hoDA" title="Product Interest"><option value="GC1000 series">GC1000 series</option>
 		<option value="GC5000 series">GC5000 series</option>

@@ -16,50 +16,51 @@
 		<script>
 		 function timestamp() { var response = document.getElementById("g-recaptcha-response"); if (response == null || response.value.trim() == "") {var elems = JSON.parse(document.getElementsByName("captcha_settings")[0].value);elems["ts"] = JSON.stringify(new Date().getTime());document.getElementsByName("captcha_settings")[0].value = JSON.stringify(elems); } } setInterval(timestamp, 500); 
 		</script>
-		<script>
-			function validate_form ( )
-			{
-				valid = true;
+		<script type="text/javascript">
+		    var webToLeadFormElement = document.getElementById('web-to-lead-form');
+		    var webToLeadFormIsSubmitted = false;
 
-				if ( document.contact_form.company.value == "" )
-				{
-					alert ( "Пожалуйста заполните поле ''." );
-					valid = false;
-				}
+		    webToLeadFormElement.addEventListener('submit', function (event) {
+			event.preventDefault();
+			if (webToLeadFormIsSubmitted) return;
+			webToLeadFormIsSubmitted = true;
+			webToLeadFormElement.submit.setAttribute('disabled', 'disabled');
 
-				if ( document.contact_form.first_name.value == "" )
-				{
-					alert ( "Пожалуйста заполните поле ''." );
-					valid = false;
-				}
+			var payloadData = {
+			    company: webToLeadFormElement.company.value,
+			    first_name: webToLeadFormElement.first_name.value,
+			    last_name: webToLeadFormElement.last_name.value,
+			    email: webToLeadFormElement.email.value,
+			    phone: webToLeadFormElement.phone.value
+				
+			};
 
-				if ( document.contact_form.last_name.value == "" )
-				{
-					alert ( "Пожалуйста заполните поле ''." );
-					valid = false;
-				}
+			// Needed url can be found on Lead Capture detail view.
+			var url = 'https://URL_OF_YOUR_CRM/api/v1/LeadCapture/API_KEY'; 
 
-				if ( document.contact_form.email.value == "" )
-				{
-					alert ( "Пожалуйста заполните поле ''." );
-					valid = false;
-				}
-
-				if ( document.contact_form.phone.value == "" )
-				{
-					alert ( "Пожалуйста заполните поле ''." );
-					valid = false;
-				}
-
-				return valid;
+			var xhr = new XMLHttpRequest();
+			xhr.open('POST', url, true);
+			xhr.setRequestHeader('Content-Type', 'application/json');
+			xhr.setRequestHeader('Accept', 'application/json');
+			xhr.onreadystatechange = function() {
+			    if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+				var containerElement = document.getElementById('web-to-lead-form-container');
+				containerElement.innerHTML = 'Sent';
+			    }
 			}
-		</script>	
+			xhr.onerror = function() {
+			    webToLeadFormElement.submit.removeAttribute('disabled');
+			    webToLeadFormIsSubmitted = false;
+			}
+			xhr.send(JSON.stringify(payloadData));
+		    });
+		</script>
 
 		<!--  ----------------------------------------------------------------------  -->
 		<!--  NOTE: Please add the following <FORM> element to your page.             -->
 		<!--  ----------------------------------------------------------------------  -->
 
-		<form name="contact_form" action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST" onsubmit="return validate_form ( );">
+		<form id="web-to-lead-form" action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST">
 
 		<input type=hidden name='captcha_settings' value='{"keyname":"NewreCaptcha","fallback":"true","orgId":"00D5j000001tjjE","ts":""}'>
 		<input type=hidden name="oid" value="00D5j000001tjjE">
@@ -78,11 +79,11 @@
 
 		<label for="last_name">Last Name</label><input  id="last_name" maxlength="80" name="last_name" size="20" type="text" /><br>
 
-		<label for="email">Email</label><input  id="email" maxlength="80" name="email" size="20" type="text" /><br>
+		<label for="email">Email</label><input  id="email" maxlength="80" name="email" size="20" type="text"/><br>
 
-		<label for="phone">Phone</label><input  id="phone" maxlength="40" name="phone" size="20" type="text" /><br>
+		<label for="phone">Phone</label><input  id="phone" maxlength="40" name="phone" size="20" type="text"/><br>
 
-		Product Interest:<select  id="00N5j000003hoDA" name="00N5j000003hoDA" title="Product Interest"><option value="">--None--</option><option value="GC1000 series">GC1000 series</option>
+		Product Interest:<select  id="00N5j000003hoDA" name="00N5j000003hoDA" title="Product Interest"><option value="GC1000 series">GC1000 series</option>
 		<option value="GC5000 series">GC5000 series</option>
 		<option value="GC3000 series">GC3000 series</option>
 		</select><br>

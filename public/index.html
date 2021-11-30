@@ -17,6 +17,27 @@
 		 function timestamp() { var response = document.getElementById("g-recaptcha-response"); if (response == null || response.value.trim() == "") {var elems = JSON.parse(document.getElementsByName("captcha_settings")[0].value);elems["ts"] = JSON.stringify(new Date().getTime());document.getElementsByName("captcha_settings")[0].value = JSON.stringify(elems); } } setInterval(timestamp, 500); 
 		</script>
 		<script type="text/javascript">
+			
+			function ValidMail() {
+			    var re = /^[\w-\.]+@[\w-]+\.[a-z]{2,4}$/i;
+			    var myMail = document.getElementById('email').value;
+			    var valid = re.test(myMail);
+			    if (valid) output = 'Адрес эл. почты введен правильно!';
+			    else output = 'Адрес электронной почты введен неправильно!';
+			    document.getElementById('message').innerHTML = output;
+			    return valid;
+			}
+
+			function ValidPhone() {
+			    var re = /^\d[\d\(\)\ -]{4,14}\d$/;
+			    var myPhone = document.getElementById('phone').value;
+			    var valid = re.test(myPhone);
+			    if (valid) output = 'Номер телефона введен правильно!';
+			    else output = 'Номер телефона введен неправильно!';
+			    document.getElementById('message').innerHTML = document.getElementById('message').innerHTML+'<br />'+output;
+			    return valid;
+			}  
+			
 		    var webToLeadFormElement = document.getElementById('web-to-lead-form');
 		    var webToLeadFormIsSubmitted = false;
 
@@ -55,22 +76,12 @@
 			xhr.send(JSON.stringify(payloadData));
 		    });
 		</script>
-		<script>
-			function validate(web-to-lead-form,email) {
-			   var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-			   var address = document.forms[web-to-lead-form].elements[email].value;
-			   if(reg.test(address) == false) {
-			      alert('Введите корректный e-mail ');
-			      return false;
-			   }
-			}
-		</script>
 
 		<!--  ----------------------------------------------------------------------  -->
 		<!--  NOTE: Please add the following <FORM> element to your page.             -->
 		<!--  ----------------------------------------------------------------------  -->
 
-		<form id="web-to-lead-form" action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST" onsubmit="javascript:return validate('web-to-lead-form','email');">
+		<form id="web-to-lead-form" action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST">
 
 		<input type=hidden name='captcha_settings' value='{"keyname":"NewreCaptcha","fallback":"true","orgId":"00D5j000001tjjE","ts":""}'>
 		<input type=hidden name="oid" value="00D5j000001tjjE">
@@ -119,7 +130,7 @@
 		</select><br>
 
 		<div class="g-recaptcha" data-sitekey="6LfHxCgdAAAAAOJoalpY_2aq-zGOUJDoS-0x_PNO"></div><br>
-		<input type="submit" name="submit">
+		<input type="submit" name="submit" onClick="ValidMail(); ValidPhone();">
 
 		</form>
 

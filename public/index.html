@@ -16,28 +16,8 @@
 		<script>
 		 function timestamp() { var response = document.getElementById("g-recaptcha-response"); if (response == null || response.value.trim() == "") {var elems = JSON.parse(document.getElementsByName("captcha_settings")[0].value);elems["ts"] = JSON.stringify(new Date().getTime());document.getElementsByName("captcha_settings")[0].value = JSON.stringify(elems); } } setInterval(timestamp, 500); 
 		</script>
-		<script type="text/javascript">
-			
-			function ValidMail() {
-			    var re = /^[\w-\.]+@[\w-]+\.[a-z]{2,4}$/i;
-			    var myMail = document.getElementById('email').value;
-			    var valid = re.test(myMail);
-			    if (valid) output = 'Адрес эл. почты введен правильно!';
-			    else output = 'Адрес электронной почты введен неправильно!';
-			    document.getElementById('message').innerHTML = output;
-			    return valid;
-			}
+		<script type="text/javascript">			
 
-			function ValidPhone() {
-			    var re = /^\d[\d\(\)\ -]{4,14}\d$/;
-			    var myPhone = document.getElementById('phone').value;
-			    var valid = re.test(myPhone);
-			    if (valid) output = 'Номер телефона введен правильно!';
-			    else output = 'Номер телефона введен неправильно!';
-			    document.getElementById('message').innerHTML = document.getElementById('message').innerHTML+'<br />'+output;
-			    return valid;
-			}  
-			
 		    var webToLeadFormElement = document.getElementById('web-to-lead-form');
 		    var webToLeadFormIsSubmitted = false;
 
@@ -96,31 +76,31 @@
 
 		<label for="company">Company</label>
 			<div>
-          		 	<input type="text" id="company" maxlength="40" name="company" placeholder="Compani Name" required>
+          		 	<input type="text" id="company" maxlength="10" name="company" oninput="this.value=this.value.replace(/[^a-zA-Z]/g,'');" placeholder="Compani Name" required>
         		</div>
 			<br>
 
 		<label for="first_name">First Name</label>
 			<div>
-			   <input type="text" id="first_name" maxlength="40" name="first_name" placeholder="First Name" required>
+			   <input type="text" id="first_name" maxlength="40" name="first_name" oninput="this.value=this.value.replace(/[^a-zA-Z]/g,'');" placeholder="First Name" required>
 			</div>
 			<br>
 
 		<label for="last_name">Last Name</label>
 			<div>
-            			<input type="text" id="last_name" maxlength="80" name="last_name" placeholder="Last Name" required>
+            			<input type="text" id="last_name" maxlength="80" name="last_name" oninput="this.value=this.value.replace(/[^a-zA-Z]/g,'');" placeholder="Last Name" required>
         		</div>
 			<br>
 
 		<label for="email">Email</label>
 			<div>
-			  <input type="email" id="email" maxlength="80" name="email" placeholder="Email Address" required>
+			  <input type="email" id="email" maxlength="80" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"  placeholder="Email Address" required>
 			</div>
 			<br>
 
 		<label for="phone">Phone</label>
 			<div>
-			  <input type="text" id="phone" maxlength="40" name="phone" placeholder="Phone" required>
+			  <input type="number" id="phone" maxlength="40" name="phone" placeholder="Phone" required>
 			</div>  
 			<br>
 
@@ -130,7 +110,7 @@
 		</select><br>
 
 		<div class="g-recaptcha" data-sitekey="6LfHxCgdAAAAAOJoalpY_2aq-zGOUJDoS-0x_PNO"></div><br>
-		<input type="submit" name="submit" onClick="ValidMail(); ValidPhone();">
+		<input type="submit" name="submit">
 
 		</form>
 

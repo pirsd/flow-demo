@@ -55,12 +55,22 @@
 			xhr.send(JSON.stringify(payloadData));
 		    });
 		</script>
+		<script>
+			function validate(web-to-lead-form,email) {
+			   var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+			   var address = document.forms[web-to-lead-form].elements[email].value;
+			   if(reg.test(address) == false) {
+			      alert('Введите корректный e-mail');
+			      return false;
+			   }
+			}
+		</script>
 
 		<!--  ----------------------------------------------------------------------  -->
 		<!--  NOTE: Please add the following <FORM> element to your page.             -->
 		<!--  ----------------------------------------------------------------------  -->
 
-		<form id="web-to-lead-form" action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST">
+		<form id="web-to-lead-form" action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST" onsubmit="javascript:return validate('web-to-lead-form','email');">
 
 		<input type=hidden name='captcha_settings' value='{"keyname":"NewreCaptcha","fallback":"true","orgId":"00D5j000001tjjE","ts":""}'>
 		<input type=hidden name="oid" value="00D5j000001tjjE">
